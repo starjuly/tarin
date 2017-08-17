@@ -1,0 +1,28 @@
+.form-control {
+   padding: 0 0.1rem 0 0.1rem;
+   border-radius: 0.25rem;
+   
+}
+
+
+
+
+.btn {
+    margin-top: 10px;
+    font-size: 0.25rem;
+    line-height: 1.25;
+    border-radius: 0.25rem;
+
+}
+
+
+.title{
+    font-size: 20px;
+    font-color:#888;
+    margin-top: 10px;
+    margin-bottom: 3px;
+}
+
+.fa { 
+    font-color:#5bc0de;
+}

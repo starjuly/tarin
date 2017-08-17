@@ -1,0 +1,59 @@
+.info{
+	margin-top: 30px;
+}
+
+.span12 .dept{
+	font-size: 13px;
+}
+
+.user{
+	margin-top: 30px;
+	font-size: 25px;
+}
+
+
+table td {
+
+	text-align: center;
+	border-spacing: 0;
+	border-collapse: collapse;
+	margin-right: 20px;
+	padding: 9px 0 9px 0;
+}
+
+table tr:nth-child(odd) {
+	background-color: #eee;
+}
+
+/*
+.bui-table{
+	margin-top:10px;
+}
+
+.bui-table th{
+	text-align: center;
+	padding:10px 0 10px 0;
+	font-size: 20px;
+	
+}
+
+ .bui-table td{
+	text-align: center;
+	padding:6px 0 6px 0;
+} 
+*/
+
+.fa {
+	color: #5CACEE;
+}
+
+
+.table-responsive th{
+	text-align: center;
+	font-size:16px;
+}
+
+.table{
+	font-size:15px;
+	margin-top:20px;
+}

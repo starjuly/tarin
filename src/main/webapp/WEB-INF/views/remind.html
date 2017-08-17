@@ -1,0 +1,172 @@
+<!DOCTYPE HTML>
+<!DOCTYPE HTML>
+<html lang="en-US">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <title>提醒</title>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="../../commons/font-awesome-4.7.0/css/font-awesome.css"/>
+    <link rel="stylesheet" href="../../commons/bootstrap/css/bootstrap.css"/>
+    <link rel="stylesheet" href="../../public/css/bui.css"/>
+    <link rel="stylesheet" href="../../public/css/style.css"/>
+    <link rel="stylesheet" href="../../public/css/remind.css"/>
+    <!-- 依赖库 手机调试的js引用顺序如下 -->
+    <script src="../../public/js/zepto.js"></script>
+    <script src="../../public/js/cordova.js"></script>
+    <script src="../../public/js/bingotouch.js"></script>
+    <script src="../../public/js/plugins/fastclick.js"></script>
+    <script src="../../commons/bootstrap/js/bootstrap.js"></script>
+    <!-- BUI库 -->
+    <script src="../../public/js/bui.js"></script>
+    <script src="../../public/js/app/_config.js"></script>
+
+
+</head>
+
+<body>
+<div class="bui-page">
+    <header class="bui-bar">
+        <div class="bui-bar-left">
+            <a class="bui-btn" onclick="bui.back();"><i class="icon-back"></i></a>
+        </div>
+        <div class="bui-bar-main">提醒</div>
+        <div class="bui-bar-right">
+        </div>
+    </header>
+    <main id="main">
+
+        <div class="col-xs-offset-2">
+            <div class="title">
+                <i class="fa fa-user"></i>
+                <span class="title">讲师姓名</span>
+            </div>
+            <div class="from-group col-xs-10 row">
+                <select id="lecturer" class="form-control ">
+                   <!--  <option value="3">王伟深</option>
+                   <option value="55">2</option>
+                   <option>3</option>
+                   <option>4</option>
+                   <option>5</option> -->
+                </select>
+            </div>
+
+            <div class="from-group col-xs-10 row">
+                <div class="title">
+                    <i class="fa fa-clock-o"></i>
+                    <span>提醒时间</span>
+                </div>
+                <div class="span1">
+                    <input type="text" class="form-control " id="datepicker_input" readonly class="bui-input">
+                </div>
+            </div>
+
+            <div class="from-group col-xs-10 row">
+                <div class="title">
+                    <i class="fa fa-book"></i>
+                    <span>提醒主题</span>
+                </div>
+                <div class="span1">
+                    <input id="subject" type="text" class="form-control ">
+                </div>
+            </div>
+
+
+            <div class="from-group col-xs-10 row">
+                <div class="title">
+                    <i class="fa fa-envelope"></i>
+                    <span>提醒内容</span>
+                </div>
+                <textarea id="content" class="form-control" rows="4"></textarea>
+            </div>
+
+            <div class="from-group ">
+                <button id="submit" type="button" class="btn btn-info  col-xs-9 ">保存</button>
+            </div>
+
+
+        </div>
+
+
+    </main>
+    <footer></footer>
+</div>
+</body>
+
+<script type="text/javascript">
+    var time;
+
+    $.ajax({
+        url: "user_model/query_lecturer",
+        type: "get",
+        success: function (data) {
+            var result = eval(data);
+            for (var i = 0; i < result.length; i++) {
+                var userName = result[i].userName;
+                var userId = result[i].userId;
+                var html = "<option value='" + userId + "'>" + userName + "</option>";
+                $("#lecturer").append(html);
+            }
+
+        },
+        error: function (result, sattus) {
+            console.log(sattus);
+        }
+    });
+
+    bui.ready(function (argument) {
+
+        // 带按钮
+        var input = $("#datepicker_input");
+        var uiPickerdate = bui.pickerdate({
+            handle: "#datepicker_input",
+            // input 显示的日期格式
+            // formatValue: "yyyy-MM-dd hh:mm",
+            onChange: function (value) {
+                input.val(value);
+                time = value;
+            }
+            // 如果不需要按钮,设置为空
+            // buttons: null
+        });
+
+
+        $("#submit").click(function () {
+            var userId = $("#lecturer").val();
+            var content = $("#content").val();
+            var subject = $("#subject").val();
+            $.ajax({
+                url: "email/send_email_by_time",
+                type: "POST",
+                data: {
+                    userId: userId,
+                    time: time,
+                    subject: subject,
+                    content: content
+                },
+                timeout : 2000,
+                success: function (data) {
+                    var result = eval(data);
+                    for (var i = 0; i < result.length; i++) {
+                        var userName = result[i].userName;
+                        var html = "<option>" + userName + "</option>";
+                        $("#lecturer").append(html);
+                    }
+
+                },
+                error: function (result, sattus) {
+                    console.log(result);
+                    console.log(sattus);
+                    bui.alert("邮件将会在指定时间发送！");
+                }
+            });
+        });
+
+
+    })
+</script>
+
+
+</html>
