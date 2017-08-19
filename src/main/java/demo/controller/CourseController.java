@@ -30,12 +30,17 @@ public class CourseController {
         return us;
     }
 
-        public Map<String,String> queryCourse(String courseName,HttpServletRequest htr){
+        /*public Map<String,String> queryCourse(String courseName,HttpServletRequest htr){
             User user = (User) htr.getSession().getAttribute("user");
             Integer userId = user.getUserId();
 //        htr.getSession().setAttribute("userId",111);
             return courseService.queryCourse(courseName);
-        }
+        }*/
+
+    public Map<String,String> queryCourse(HttpServletRequest req){
+        String courseName =req.getSession().getAttribute("courseName").toString();
+        return courseService.queryCourse(courseName);
+    }
 
         public List<Map<String,String>> queryAllCourse(){
             return courseService.queryAllCourse();
@@ -53,5 +58,17 @@ public class CourseController {
             Integer userId=user.getUserId();
             return courseService.querySignCourse(userId);
         }
+
+
+    public void onJump(String courseName,HttpServletRequest req){
+        req.getSession().setAttribute("courseName",courseName);
+    }
+
+    public void unSign(String courseName,HttpServletRequest req){
+        User user= (User) req.getSession().getAttribute("user");
+        Integer userId=user.getUserId();
+        courseService.courseUnSign(courseName,userId);
+    }
+
 
     }

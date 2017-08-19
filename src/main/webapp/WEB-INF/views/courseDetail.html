@@ -29,7 +29,8 @@
         <header class="bui-bar">
             <div class="bui-bar-left">
                 <!-- 左边按钮 -->
-                <a class="bui-btn" onclick="bui.back();"><i class="icon-back"></i></a>
+                <!--<a class="bui-btn" onclick="bui.back();"><i class="icon-back"></i></a>-->
+                <a class="bui-btn" onclick="back();"><i class="icon-back"></i></a>
             </div>
             <div class="bui-bar-main">课程详情</div>
             <div class="bui-bar-right">
@@ -105,7 +106,7 @@
                <!-- <div class="bui-btn primary bui-box-center" ng-click="onSign()">我要报名</div>-->
             </div>
 
-            <ul class="bui-nav bui-fluid">
+           <!-- <ul class="bui-nav bui-fluid">
                 <li class="bui-btn bui-box-vertical span3"><i class="icon-home"></i>
                     <div class="span1">首页</div>
                 </li>
@@ -118,7 +119,7 @@
                 <li class="bui-btn bui-box-vertical span3"><i class="icon-home" ng-click="jump('showSignCourse.html')"></i>
                     <div class="span1">个人</div>
                 </li>
-            </ul>
+            </ul>-->
         </footer>
     </div>
 </div>
@@ -141,7 +142,7 @@
     var courseId;
     var app = angular.module('myApp', []);
     app.controller('httCtrl', function($scope,$http) {
-        $scope.courseName="课程设计";
+       /* $scope.courseName="课程设计";
         $http.get("/course/query_course",{
             params:{
                 "courseName":$scope.courseName
@@ -156,6 +157,19 @@
             $scope.trainingTime = response.data.trainingTime;
             $scope.trainingLast = response.data.trainingLast;
             //courseId
+            courseId = response.data.courseId;
+            $("#courseId").val(courseId);
+        });*/
+        $http.get("/course/query_course").then(function (response) {
+            $scope.courseName = response.data.courseName;
+            $scope.teacherName = response.data.teacherName;
+            $scope.departmentName = response.data.departmentName;
+            $scope.phone = response.data.phone;
+            $scope.email = response.data.email;
+            $scope.courseIntroduce = response.data.courseIntroduce;
+            $scope.trainingTime = response.data.trainingTime;
+            $scope.trainingLast = response.data.trainingLast;
+            //设置id
             courseId = response.data.courseId;
             $("#courseId").val(courseId);
         });
@@ -246,8 +260,7 @@
 
     //签到
     function signIn(){
-       var qiandao = $("#qiandao").val();
-        alert(qiandao);
+       var qiandao = $("#qiandao").text();
        if(qiandao == "已签到"){
            return;
        }
@@ -255,8 +268,7 @@
     }
     //填写反馈
     function feedback(){
-        var fankui = $("#fankui").val();
-        alert(fankui);
+        var fankui = $("#fankui").text();
         if(fankui == "已反馈"){
             return;
         }
@@ -269,6 +281,10 @@
     //查看反馈信息
     function feedbackResult() {
         window.location='/feedbackResult.html?courseId='+courseId;
+    }
+    //回退
+    function back() {
+        window.location = "/course.html";
     }
 </script>
 </body>

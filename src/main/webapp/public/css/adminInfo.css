@@ -1,0 +1,94 @@
+.info{
+	margin-top: 30px;
+	text-align: center;
+}
+
+.span12 .dept{
+	font-size: 13px;
+}
+
+.user{
+	margin-top: 30px;
+	font-size: 25px;
+}
+
+
+table td {
+	border-spacing: 0;
+	border-collapse: collapse;
+	margin-right: 20px;
+	padding: 10px 0 px 0;
+	
+}
+
+/* table tr:nth-child(odd) {
+	background-color: #eee;
+} */
+
+table th{
+	background-color: #eee;
+	font-size:15px;
+}
+
+table  td:nth-child(even) {
+	text-align: right;
+}
+
+table  th:nth-child(even) {
+	text-align: right;
+}
+
+
+table   td:nth-child(odd) {
+	text-align: left;
+
+	border-top:solid 1px #c3c4c6;
+	border-left:solid 1px #c3c4c6;
+	overflow:hidden;
+	text-overflow:ellipsis;
+	white-space:nowrap;
+}
+
+table  th:nth-child(odd) {
+	text-align: left;
+	width: 70%;
+
+}
+
+.fa {
+	color: #5CACEE;
+}
+
+
+.table-responsive th{
+	text-align: center;
+	font-size:16px;
+}
+
+.table{
+	font-size:16px;
+	margin-top:20px;
+	
+}
+
+table{
+	padding: 10px 0 10px 10px;
+	width: 100%;
+	table-layout:fixed; /** 限制table宽度不变*/
+}
+
+td{
+	overflow:hidden; /*不显示超过对象宽度的内容*/ 
+    text-overflow:ellipsis;  /*当对象内文本溢出时显示省略标记（...）*/ 
+    white-space:nowrap; /*限制在一行内显示所有文本*/
+}
+
+.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+    padding: 10px;
+   
+}
+
+a:link, a:visited, a:hover, a:active {
+    color:#5CACEE;
+}
+

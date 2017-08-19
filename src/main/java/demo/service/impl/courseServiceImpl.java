@@ -17,4 +17,5 @@ public interface courseServiceImpl {
     Boolean courseEnroll(String courseName,Integer userId);
     List<Map<String,String>> queryAllCourse();
     List<Map<String,String>> querySignCourse(Integer userId);
+    void courseUnSign(String courseName,Integer userId);
 }

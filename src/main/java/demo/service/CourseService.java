@@ -112,4 +112,14 @@ public class CourseService implements courseServiceImpl {
         }
         return lm;
     }
+
+
+
+    public void courseUnSign(String courseName,Integer userId) {
+        CriteriaQuery<TrainingCourse> cq = TrainingCourse.query();
+        cq.where("courseName like ?" ,
+                "%"+courseName);
+        Integer courseId=cq.first().getCourseId();
+        SignIn.deleteAll("courseId=? and userId=?",courseId,userId);
+    }
 }
