@@ -25,7 +25,7 @@ public class EmailJob implements Job{
     public void execute(JobExecutionContext context)
             throws JobExecutionException {
 
-        MailTest.send(Email.emailAddress,Email.subject,Email.content);
+        MailTest.send(Email.emailAdd,Email.sub,Email.cont);
 
     }
 }

@@ -2,15 +2,16 @@
 <html lang="en-US">
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-    <title>个人信息</title> 
-    <meta name="format-detection" content="telephone=no" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-    <link rel="stylesheet" href="../../commons/font-awesome-4.7.0/css/font-awesome.css" />
-    <link rel="stylesheet" href="../../commons/bootstrap/css/bootstrap.css" />
-    <link rel="stylesheet" href="../../public/css/bui.css" />
-    <link rel="stylesheet" href="../../public/css/style.css" />
-        <link rel="stylesheet" href="../../public/css/adminInfo.css" />
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <title>个人信息</title>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="../../commons/font-awesome-4.7.0/css/font-awesome.css"/>
+    <link rel="stylesheet" href="../../commons/bootstrap/css/bootstrap.css"/>
+    <link rel="stylesheet" href="../../public/css/bui.css"/>
+    <link rel="stylesheet" href="../../public/css/style.css"/>
+    <link rel="stylesheet" href="../../public/css/adminInfo.css"/>
     <!-- 依赖库 手机调试的js引用顺序如下 -->
     <script src="../../public/js/zepto.js"></script>
     <script src="../../public/js/cordova.js"></script>
@@ -20,10 +21,9 @@
     <script src="../../public/js/bui.js"></script>
     <script src="../../public/js/app/_config.js"></script>
     <style type="text/css">
-       
+
 
     </style>
-
 
 
 </head>
@@ -39,77 +39,81 @@
     </header>
     <main id="main">
 
-      <div class="info">
+        <div class="info">
 
 
-      <!-- 盒子等比布局--> 
-      <div class="bui-box">
-        <div class="span3">
-        </div>
-        <div class="span6">
+            <!-- 盒子等比布局-->
+            <div class="bui-box">
+                <div class="span3">
+                </div>
+                <div class="span6">
 
-          <div class="span12 "> 
-            <i class="fa fa-user-circle fa-2x"></i>
-            <span id="userName" class="user">
+                    <div class="span12 ">
+                        <i class="fa fa-user-circle fa-2x"></i>
+                        <span id="userName" class="user">
 莫星键
             </span>
-           </div>
-          <div id="departmentName" class="span12 dept" >
-东莞区域支撑中心
+                    </div>
+                    <div id="departmentName" class="span12 dept">
+
+                    </div>
+                </div>
+
+                <div class="span3">
+                </div>
             </div>
-          </div>
 
-        <div class="span3">
+
         </div>
-      </div>
-       
-
-      </div>
 
 
+        <!--  <h4 class="name">莫星键</h4>
+        <h4 class="dept">东莞区域支撑中心</h4> -->
 
 
-     <!--  <h4 class="name">莫星键</h4>
-     <h4 class="dept">东莞区域支撑中心</h4> -->
+        <!--    <div>
+          <span> 已学课程</span>
+        </div> -->
 
-
-   <!--    <div>
-     <span> 已学课程</span>
-   </div> -->
-
-        <table id="trainedCrouse" class="table ">
-          <tr>
-            <th >
-              提醒记录
-            </th>
-            <th > 
-             <a href="www.baidu.com">查看更多></a>
-            </th>
-          </tr>
-           <tr>
-           <a href="www"> 
-              <td colspan="2">
-              王伟深讲师您好，您的课程将于7月18日上午9点上课，请记得备好课
-              </td>
-              <!-- <td>8：30</td> -->
-              </a>
+        <table id="remindList" class="table ">
+            <tr>
+                <th>
+                    提醒记录
+                </th>
+                <th>
+                    <a href="www.baidu.com">查看更多></a>
+                </th>
             </tr>
-
-             <tr >
-              <a href="www"> 
-              <td colspan="2">司丽讲师您好，您的课程将于7月20日上午9点上课，请记得备好课</td>
-              </a>
-             <!--  <td>日期</td> -->
-            </tr><tr>
-              <td colspan="2">
-               <a href="www"> 
-                卢俊讲师您好，您的课程将于7月25日上午9点上课，请记得备好课
-                </a>
+           <!-- <tr>
+                <td>
+                    <a href="www">
+                        王伟深讲师您好，您的课程将于7月18日上午9点上课，请记得备好课
+                    </a>
                 </td>
-             <!--  <td>8：30</td> -->
+                <td>08：30</td>
             </tr>
-        </table>
 
+            <tr>
+                <td>
+                    <a href="remind.html?emailId=" +emailId>
+                        司丽讲师您好，您的课程将于7月20日上午9点上课，请记得备好课
+                    </a>
+                </td>
+                <td>
+                    7月15日
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="www">
+                        卢俊讲师您好，您的课程将于7月25日上午9点上课，请记得备好课
+                    </a>
+                </td>
+                <td>
+                    8月2日
+                </td>
+            </tr>-->
+        </table>
 
 
     </main>
@@ -119,49 +123,129 @@
 
 <script type="text/javascript">
 
-    var userId;
-    bui.ready(function (argument) {
+
+    console.log(getDate(1503132488000));
+
+    var tt = "1503132488000";
+    var oDate = new Date(1503132488000);
+    var oMonth = oDate.getMonth() + 1;
+    var oDay = oDate.getDate();
+    var year = oDate.getFullYear();
+    console.log(year);
+    console.log(oDay);
 
 
+    //    bui.ready(function (argument) {
+    $(function () {
         /**查询用户姓名和部门**/
         $.ajax({
-           url : "user_model/query_user",
-           type : "GET",
-            async : true,
-            success :function (data) {
-                var userName = data.name;
+            url: "user_model/query_user",
+            type: "GET",
+            async: false,
+            success: function (data) {
+                var userName = data.userName;
                 var departmentName = data.departmentName;
-//                userId = data.userId;
                 $("#userName").html(userName);
                 $("#departmentName").html(departmentName);
-
+                var userId = data.userId;
+                //根据userId获取提醒列表
+                getEmails(userId);
             },
-            error : function (status) {
+            error: function (status) {
                 console.log(status);
             }
-        });
+        })
+    });
 
-        /**查询用户已学课程**/
+
+    function getEmails(userId) {
+        /**查询管理员的提醒列表**/
         $.ajax({
-            url : "sign_in_model/query_by_user_id",
-            type : "GET",
-            async : true,
-            success :function (data) {
+            url: "email/query_email_info_by_id",
+            type: "POST",
+            data: {
+                userId: userId
+            },
+            async: false,
+            success: function (data) {
                 var result = eval(data);
-                for(var i=0;i<result.length;i++){
-                    var courseName = result[i].courseName;
-                    var html = "<tr><td>"+(i+1)+"</td><td>"+courseName+"</td></tr>";
-                    $("#trainedCrouse").append(html);
+                console.log(result);
+                for (var i = 0; i < result.length; i++) {
+                    var emailId = result[i].emailId;
+                    var userId = result[i].userId;
+                    var content = result[i].content;
+                    var createdAt = result[i].createdAt;
+                    var date = getDate(createdAt);
+                    var time = getTime(date);
+                    console.log(emailId);
+                    console.log(userId);
+                    console.log(content);
+                    console.log(date);
+                    console.log(time);
+                    var html = "<tr ><td><a  href='/remind.html?emailId=" + emailId + "'>" + content + "</a></td><td>" + time + "</td></tr>";
+                    console.log(html);
+                    $("#remindList").append(html);
                 }
             },
-            error : function (status) {
+            error: function (status) {
                 console.log(status);
             }
         });
-    })
+    }
 
 
-    
+    /**
+     * 根据时间判断，如果是同一日返回时分，否则返回月日
+     * @param time
+     * @returns {string}
+     */
+    function getTime(time) {
+        //测试
+        //var time = "2017-08-20 08:30:26";
+        //获取当前时间
+        var currentTime = new Date();
+        var year = currentTime.getFullYear(); //年
+        var month = currentTime.getMonth() + 1; //月份+1
+        if (month < 10) {
+            month = "0" + month;  //小于10补0
+        }
+        var day = currentTime.getDate(); //日
+        var curDate = year + "-" + month + "-" + day; //拼接
+        var array = time.split(" ");
+        //判断日期，如果是同一天就显示时间，如果不是就显示日期
+        if (curDate == array[0]) {
+            //获取时分
+            var hourMin = array[1].substring(0, 5);
+            return hourMin;
+        } else {
+            //获取月日
+            var monDay = array[0].substring(5, 10);
+            var arr = monDay.split("-");
+            var resultMonDay = arr[0] + '月' + arr[1] + '日';
+            return resultMonDay;
+        }
+    }
+
+
+    /**
+     * 将毫秒数转为日期格式
+     * @param str
+     * @returns {string}
+     */
+    function getDate(str) {
+        var oDate = new Date(str);
+        var month = oDate.getMonth() + 1;
+        if (month < 10) {
+            month = "0" + month;  //小于10补0
+        }
+        var day = oDate.getDate();
+        var year = oDate.getFullYear();
+        var hours = oDate.getHours();
+        var minutes = oDate.getMinutes();
+        var seconds = oDate.getSeconds();
+        var result = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
+        return result;
+    };
 </script>
 
 

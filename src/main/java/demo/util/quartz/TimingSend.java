@@ -21,12 +21,9 @@ import static org.quartz.TriggerBuilder.newTrigger;
  */
 public class TimingSend {
 
-    public static void send(String time) throws Exception {
+    public static void send(Date time) throws Exception {
         TimingSend ts = new TimingSend();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        Date parse = sdf.parse("2017-08-16 15:35:00");
-        Date parse = sdf.parse(time);
-        ts.run(parse);
+        ts.run(time);
 
     }
 

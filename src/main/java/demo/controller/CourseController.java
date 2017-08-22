@@ -1,12 +1,9 @@
 package demo.controller;
 
-import demo.model.TrainingCourse;
 import demo.model.User;
 import demo.service.CourseService;
 import demo.service.impl.courseServiceImpl;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import java.util.HashMap;
 import java.util.List;
@@ -14,15 +11,20 @@ import java.util.Map;
 
 
 /**
+ * 课程
  * Created by liangwenhui on 2017/7/31.
  */
 public class CourseController {
     courseServiceImpl courseService=new CourseService();
-    public String createCourse(String courseJson) throws Exception{
+   /* public String createCourse(String courseJson) throws Exception{
         Boolean status=courseService.createCourse(courseJson);
         if(status){
             return "success";
         }else return "fail";
+    }*/
+
+    public String createCourse(String courseJson) throws Exception{
+        return courseService.createCourse(courseJson).toString();
     }
 
     public User queryTeacher(String name){
@@ -62,6 +64,7 @@ public class CourseController {
 
     public void onJump(String courseName,HttpServletRequest req){
         req.getSession().setAttribute("courseName",courseName);
+
     }
 
     public void unSign(String courseName,HttpServletRequest req){

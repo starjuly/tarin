@@ -35,6 +35,7 @@ public class MailTest {
         ss.setSubject(subject);
         ss.addContent(content);
         ss.sendMail(tos);
+
     }
 }
 

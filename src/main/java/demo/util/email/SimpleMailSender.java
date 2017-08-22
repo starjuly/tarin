@@ -1,5 +1,9 @@
 package demo.util.email;
 
+import demo.model.Email;
+import demo.service.EmailService;
+import demo.service.impl.EmailServiceImpl;
+
 import java.io.File;
 import java.util.Date;
 import java.util.List;
@@ -18,7 +22,9 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMultipart;
 
-public class SimpleMailSender extends AbstractMailSender {  
+public class SimpleMailSender extends AbstractMailSender {
+
+    EmailService emailService = new EmailServiceImpl();
   
     private Multipart multipart; //java mail 中用于存放不同部分邮件内容的容器  
     private Transport transport;
@@ -50,8 +56,21 @@ public class SimpleMailSender extends AbstractMailSender {
             for(int i=0;i<toAddresses.size();i++){
             	transport.sendMessage(message, new Address[]{new InternetAddress(toAddresses.get(i))});
             }
-        } catch (MessagingException e) {  
-            e.printStackTrace();  
+            //发送成功 保存到数据库
+            Email email = new Email();
+            email.setEmailAddress(Email.emailAdd);
+            email.setSubject(Email.sub);
+            email.setContent(Email.cont);
+            email.setUserId(Email.admId);  //设置管理员id
+            email.setLecturerId(Email.lecId);  //设置讲师id
+            email.setLecturerName(Email.lecName);
+            email.setTime(Email.sendTime);
+            //保存到数据库
+            emailService.create(email);
+
+        } catch (MessagingException e) {
+            e.printStackTrace();
+
         }  
     }  
   

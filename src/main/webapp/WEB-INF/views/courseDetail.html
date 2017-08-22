@@ -103,7 +103,7 @@
             <!-- 底部内容 -->
 
             <div id="role">
-               <!-- <div class="bui-btn primary bui-box-center" ng-click="onSign()">我要报名</div>-->
+
             </div>
 
            <!-- <ul class="bui-nav bui-fluid">
@@ -190,8 +190,27 @@
     });
 
 
+    var isEntryBlank = false;
+    //判断学员是否报名，没报名添加报名按钮
+    $.ajax({
+        url : "/entry_blank/judge",
+        type : "POST",
+        async : false,
+        data : {
+            courseId : id
+        },
+        success : function (data) {
+            if(data.result){
+                isEntryBlank = true;
+            }else{
+                //添加报名按钮
+                $("#role").html("<div id=‘entryBlank‘ class=‘bui-btn primary bui-box-center‘ ng-click=‘onSign()‘>我要报名</div>");
+            }
+        }
+    });
 
 
+    //根据角色显示不同的按钮
     $.ajax({
         url : "/user_model/query_user",
         type : "POST",
@@ -199,10 +218,11 @@
         success : function (data) {
             var user = eval(data);
             var role = user.role;
-            if(role == 1){
+            //学员
+            if(role == 1 && isEntryBlank == true){
                 var student = "<div class='bui-box'><div class='span6'><div id='qiandao' class='bui-btn default bui-box-center' onclick='signIn()'>签到</div></div> <div class='span6'><div id='fankui' class='bui-btn default bui-box-center' onclick='feedback()'>反馈</div> </div> </div>";
                 $("#role").html(student);
-            }else if(role ==0){
+            }else if(role ==0){  //管理员
                 var admin = "<div class='bui-box'> <div class='span6'><div class='bui-btn default bui-box-center' onclick='signInResult()'>查看签到</div> </div> <div class='span6'>     <div class='bui-btn default bui-box-center' onclick='feedbackResult()'>查看反馈</div> </div></div>";
                 $("#role").html(admin);
             }

@@ -150,7 +150,7 @@
                 .then(function (response) {$scope.mail=response.data.mail;$scope.phone=response.data.tel;$scope.lecturerId=response.data.userId});
         };
 
-        $scope.onSubmit=function () {
+        /*$scope.onSubmit=function () {
             $scope.trainingTime = $filter('date')($scope.trainingTime,'yyyy-MM-dd');
             $http.get("course/create_course",{
 			    params:{
@@ -166,6 +166,39 @@
 			}).then(function () {$scope.myVar=true;$scope.myVar1=false;$scope.status=respone.data;
                 window.location='/courseDetail.html';
 			})
+        };*/
+
+
+        $scope.onSubmit=function () {
+            $scope.trainingTime = $filter('date')($scope.trainingTime,'yyyy-MM-dd');
+            if ($scope.courseName==null){
+                bui.alert("请输入课程名称");
+            }else if ($scope.lecturerId==null){
+                bui.alert("请输入教师名称");
+            }else if ($scope.trainingTime==null){
+                bui.alert("请输入课程日期");
+            }else {
+                $http.get("course/create_course",{
+                    params:{
+                        "courseJson":{
+                            "courseName":$scope.courseName,
+                            "lecturerId":$scope.lecturerId,
+                            "trainingTime":$scope.trainingTime,
+                            "trainLast":$scope.trainLast,
+                            "trainingPlace":$scope.trainingPlace,
+                            "courseIntroduction":$scope.courseIntroduction
+                        }
+                    }
+                }).then(function (response) {
+                    $scope.status=response.data;
+                    if($scope.status=="true"){
+                        window.location="/addCourseResult.html?result=0";
+                    }else {
+                        window.location="/addCourseResult.html?result=1";
+                    }
+                })
+            }
+
         };
 
         $scope.jump = function(url) {

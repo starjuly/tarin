@@ -45,11 +45,11 @@
             </div>
             <div class="from-group col-xs-10 row">
                 <select id="lecturer" class="form-control ">
-                   <!--  <option value="3">王伟深</option>
-                   <option value="55">2</option>
+                    <!-- <option value="3" >王伟深</option>
+                   <option value="55" selected="selected">司丽</option>
                    <option>3</option>
                    <option>4</option>
-                   <option>5</option> -->
+                   <option>5</option>-->
                 </select>
             </div>
 
@@ -96,17 +96,35 @@
 </body>
 
 <script type="text/javascript">
-    var time;
+    //获取url中"?"符后的字串
+    var url = location.search;
+    var theRequest = new Object();
+    if (url.indexOf("?") != -1) {
+        var str = url.substr(1);
 
+        strs = str.split("&");
+        for(var i = 0; i < strs.length; i ++) {
+            theRequest[strs[i].split("=")[0]]=unescape(strs[i].split("=")[1]);
+        }
+    }
+    var emailId = null;
+    emailId = theRequest.emailId;
+    console.log(emailId);
+
+
+
+
+    /**查询讲师*/
     $.ajax({
         url: "user_model/query_lecturer",
         type: "get",
+        async : true,
         success: function (data) {
             var result = eval(data);
             for (var i = 0; i < result.length; i++) {
                 var userName = result[i].userName;
                 var userId = result[i].userId;
-                var html = "<option value='" + userId + "'>" + userName + "</option>";
+                var html = "<option id='"+userId+"' value='" + userId + "' >" + userName + "</option>";
                 $("#lecturer").append(html);
             }
 
@@ -115,6 +133,11 @@
             console.log(sattus);
         }
     });
+
+
+
+    var time;
+
 
     bui.ready(function (argument) {
 
@@ -133,10 +156,59 @@
         });
 
 
+        if(emailId != null) {
+            $.ajax({
+                url: "email/query_by_email_id",
+                type: "POST",
+                data: {
+                    emailId: emailId
+                },
+                async : true,
+                success : function(data){
+                    console.log(data);
+                    var lecturerId = data.lecturerId;
+                    var time = data.time; //毫秒
+                    var date = getDate(time); //将毫秒转为日期格式
+                    var subject = data.subject;
+                    var content = data.content;
+                    console.log(lecturerId+"-"+time+"-"+subject+"-"+content);
+
+                    $("#subject").val(subject).attr("disabled","disabled");
+                    $("#content").html(content).attr("disabled","disabled");
+                    var id = '#'+lecturerId;
+                    $(id).attr("selected","selected");
+                    $("#lecturer").attr("disabled","disabled");
+                    input.val(date);
+                    input.attr("disabled","disabled");
+                    //移除保存按钮
+                    $("#submit").remove();
+
+                },
+                error : function (data,status) {
+                    console.log(status);
+                }
+            });
+        }
+
+
         $("#submit").click(function () {
             var userId = $("#lecturer").val();
             var content = $("#content").val();
             var subject = $("#subject").val();
+            var currentTime = new Date().getTime();
+            var bool = judge(time,currentTime);
+            if(!bool){
+                bui.alert("提醒时间不能早于现在时间！")
+            }
+            console.log(date.getTime());
+            if(subject == null){
+                bui.alert("主题为空，请填写！");
+                return;
+            }
+            if(content == null){
+                bui.alert("内容为空，请填写！");
+                return;
+            }
             $.ajax({
                 url: "email/send_email_by_time",
                 type: "POST",
@@ -165,7 +237,43 @@
         });
 
 
-    })
+    });
+
+
+    /**判断时间*/
+    function judge(time,currentTime){
+        //  /-/g 是正则表达式 表示将所有短横线-替换为斜杠/ 其中g表示全局替换
+        var date = time.replace(/-/g,"/");
+        var newTime = new Date(date);
+        var timeMills = newTime.getTime();  //转化成毫秒
+        if(timeMills - currentTime <=0){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+
+
+    /**
+     * 将毫秒数转为日期格式
+     * @param str
+     * @returns {string}
+     */
+    function getDate(str) {
+        var oDate = new Date(str);
+        var month = oDate.getMonth() + 1;
+        if (month < 10) {
+            month = "0" + month;  //小于10补0
+        }
+        var day = oDate.getDate();
+        var year = oDate.getFullYear();
+        var hours = oDate.getHours();
+        var minutes = oDate.getMinutes();
+        var seconds = oDate.getSeconds();
+        var result = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
+        return result;
+    };
 </script>
 
 

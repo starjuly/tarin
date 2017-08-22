@@ -86,6 +86,8 @@ public class CourseService implements courseServiceImpl {
             ma.put("teacherName",te.getUserName());
             ma.put("courseName",tr.getCourseName());
             ma.put("trainingTime",tr.getTrainingTime().toString());
+            //后来添加
+            ma.put("courseId",String.valueOf(tr.getCourseId()));
             lm.add(ma);
         }
         return lm;

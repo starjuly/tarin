@@ -40,7 +40,7 @@
             <div class="bui-list" ng-repeat="x in datas" >
 
                 <!--修改了onjump以及跳转方法-->
-                <div class="bui-btn bui-box" ng-click="onJump(x.courseName)">
+                <div class="bui-btn bui-box" ng-click="onJump(x.courseName,x.courseId)">
                     <img src="../../public/images/Layer-0.png">
                 </div>
 
@@ -52,7 +52,7 @@
                         <label>课程名称</label>
                     </div>
                     <div class="span1">
-                        <input id="courseName" type="text" class="bui-input" ng-model="x.courseName">
+                        <input id="courseName" type="text"  class="bui-input" ng-model="x.courseName">
                     </div>
                     <div class="bui-label" >
                         <label style="float:right; margin-right: 20px">讲师:</label>
@@ -137,14 +137,15 @@
             window.location = url;
         }
         //新增方法
-        $scope.onJump = function (courseName) {
+        $scope.onJump = function (courseName,courseId) {
             $http.get("/course/on_jump", {
                 params: {
-                    "courseName": courseName
+                    "courseName": courseName,
+                    "courseId" : courseId
                 }
             }).then(function (response) {
             });
-            window.location = '/courseDetail.html';
+            window.location = '/courseDetail.html?courseId='+courseId;
         }
     });
 

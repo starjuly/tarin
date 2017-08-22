@@ -14,10 +14,10 @@
 
 
 table td {
-	border-spacing: 0;
-	border-collapse: collapse;
-	margin-right: 20px;
-	padding: 10px 0 px 0;
+	border-spacing: 0 !important;
+	border-collapse: collapse !important;
+	/*margin-right: 20px;*/
+	padding: 10px 10px 10px 10px !important;
 	
 }
 
@@ -26,32 +26,33 @@ table td {
 } */
 
 table th{
-	background-color: #eee;
-	font-size:15px;
+	background-color: #eee  !important;
+	font-size:15px !important;
+
 }
 
 table  td:nth-child(even) {
-	text-align: right;
+	text-align: right !important;
+
 }
 
 table  th:nth-child(even) {
 	text-align: right;
+	white-space:nowrap;
 }
 
 
 table   td:nth-child(odd) {
-	text-align: left;
-
-	border-top:solid 1px #c3c4c6;
-	border-left:solid 1px #c3c4c6;
-	overflow:hidden;
-	text-overflow:ellipsis;
-	white-space:nowrap;
+	text-align: left !important;
+	/*border-left:solid 1px #c3c4c6  !important;*/
+	overflow:hidden  !important;
+	text-overflow:ellipsis !important;
+	white-space:nowrap  !important;
 }
 
 table  th:nth-child(odd) {
-	text-align: left;
-	width: 70%;
+	text-align: left  !important;
+	width: 70%  !important;
 
 }
 
@@ -60,31 +61,27 @@ table  th:nth-child(odd) {
 }
 
 
-.table-responsive th{
-	text-align: center;
-	font-size:16px;
-}
-
 .table{
-	font-size:16px;
-	margin-top:20px;
+	font-size:16px !important;
+	margin-top:20px !important;
 	
 }
 
 table{
-	padding: 10px 0 10px 10px;
-	width: 100%;
-	table-layout:fixed; /** 限制table宽度不变*/
+	padding: 10px 0 10px 10px !important;
+	width: 100% !important;
+	table-layout:fixed !important; /** 限制table宽度不变*/
 }
 
 td{
 	overflow:hidden; /*不显示超过对象宽度的内容*/ 
     text-overflow:ellipsis;  /*当对象内文本溢出时显示省略标记（...）*/ 
     white-space:nowrap; /*限制在一行内显示所有文本*/
+	border-top:solid 1px #c3c4c6 !important;
 }
 
 .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
-    padding: 10px;
+    padding: 10px !important;
    
 }
 

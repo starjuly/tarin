@@ -72,6 +72,12 @@ public class UserModelController {
     }
 
 
+    /**
+     * 查询当前登录的用户
+     * @param request
+     * @param response
+     * @return
+     */
     public User queryUser(HttpServletRequest request, HttpServletResponse response){
         User user = (User) request.getSession().getAttribute("user");
         return user;
