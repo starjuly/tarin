@@ -15,7 +15,7 @@ public interface courseServiceImpl {
     User queryTeacherById(Integer id);
     Map<String,String> queryCourse(String courseName);
     Boolean courseEnroll(String courseName,Integer userId);
-    List<Map<String,String>> queryAllCourse();
-    List<Map<String,String>> querySignCourse(Integer userId);
-    void courseUnSign(String courseName,Integer userId);
+    List<Map<String,String>> queryAllCourse(Integer  userId);
+    void courseUnEntityBlank(String courseName,Integer userId);
+    Boolean updateCourse(String courseJson);
 }

@@ -173,6 +173,7 @@
             courseId = response.data.courseId;
             $("#courseId").val(courseId);
         });
+        //点击报名
         $scope.onSign=function(){
             $http.get("/course/course_enroll", {
                 params: {
@@ -204,7 +205,7 @@
                 isEntryBlank = true;
             }else{
                 //添加报名按钮
-                $("#role").html("<div id=‘entryBlank‘ class=‘bui-btn primary bui-box-center‘ ng-click=‘onSign()‘>我要报名</div>");
+                $("#role").html("<div class='bui-btn primary bui-box-center' ng-click='onSign()'>我要报名</div>");
             }
         }
     });

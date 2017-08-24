@@ -8,6 +8,7 @@ import leap.orm.query.CriteriaQuery;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -31,5 +32,13 @@ public class EntryBlankController {
         Map<String,Boolean> map = new HashMap<String,Boolean>();
         map.put("result",result);
         return map;
+    }
+
+
+    //查询报名了的课程
+    public List<Map<String, String>> queryEntryBlankCourse(HttpServletRequest req) {
+        User user = (User) req.getSession().getAttribute("user");
+        Integer userId = user.getUserId();
+        return entryBlankService.queryEnrollCourse(userId);
     }
 }

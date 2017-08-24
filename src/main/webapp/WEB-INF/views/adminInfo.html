@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="../../public/css/style.css"/>
     <link rel="stylesheet" href="../../public/css/adminInfo.css"/>
     <!-- 依赖库 手机调试的js引用顺序如下 -->
+    <script src="../../commons/angularJs/angular.min.js"></script>
     <script src="../../public/js/zepto.js"></script>
     <script src="../../public/js/cordova.js"></script>
     <script src="../../public/js/bingotouch.js"></script>
@@ -29,7 +30,8 @@
 </head>
 
 <body>
-<div class="bui-page">
+<div ng-app="myApp" ng-controller="httCtrl">
+<div class="bui-page" ng-hide="myVar">
     <header class="bui-bar">
         <div class="bui-bar-left">
         </div>
@@ -117,22 +119,33 @@
 
 
     </main>
-    <footer></footer>
+    <footer>
+        <!-- 底部内容 -->
+        <ul class="bui-nav bui-fluid" >
+            <!--管理员 四栏-->
+            <li class="bui-btn bui-box-vertical span3" ng-click="jump('course.html')" ><i class="icon-home" ></i>
+                <div class="span1">课程</div>
+            </li>
+            <li class="bui-btn bui-box-vertical span3" ng-click="jump('addCourse.html')" ><i class="fa fa-plus" ></i>
+                <div class="span1" >添加课程</div>
+            </li>
+            <!-- 在jump中添加需要跳转的路径-->
+            <li class="bui-btn bui-box-vertical span3" ng-click="jump('remind.html')" ><i class="fa fa-clock-o" ></i>
+                <div class="span1" >提醒</div>
+            </li>
+            <li class="bui-btn bui-box-vertical span3" ng-click="jump('adminInfo')" ><i class="fa fa-info-circle" ></i>
+                <div class="span1">个人信息</div>
+            </li>
+
+        </ul>
+    </footer>
 </div>
-</body>
+</div>
 
 <script type="text/javascript">
 
 
-    console.log(getDate(1503132488000));
 
-    var tt = "1503132488000";
-    var oDate = new Date(1503132488000);
-    var oMonth = oDate.getMonth() + 1;
-    var oDay = oDate.getDate();
-    var year = oDate.getFullYear();
-    console.log(year);
-    console.log(oDay);
 
 
     //    bui.ready(function (argument) {
@@ -141,7 +154,7 @@
         $.ajax({
             url: "user_model/query_user",
             type: "GET",
-            async: false,
+            async: true,
             success: function (data) {
                 var userName = data.userName;
                 var departmentName = data.departmentName;
@@ -166,7 +179,7 @@
             data: {
                 userId: userId
             },
-            async: false,
+            async: true,
             success: function (data) {
                 var result = eval(data);
                 console.log(result);
@@ -177,13 +190,7 @@
                     var createdAt = result[i].createdAt;
                     var date = getDate(createdAt);
                     var time = getTime(date);
-                    console.log(emailId);
-                    console.log(userId);
-                    console.log(content);
-                    console.log(date);
-                    console.log(time);
                     var html = "<tr ><td><a  href='/remind.html?emailId=" + emailId + "'>" + content + "</a></td><td>" + time + "</td></tr>";
-                    console.log(html);
                     $("#remindList").append(html);
                 }
             },
@@ -191,7 +198,19 @@
                 console.log(status);
             }
         });
+
     }
+
+
+
+    //底部栏控制
+    var app = angular.module('myApp', []);
+    app.controller('httCtrl', function($scope,$http,$filter) {
+
+        $scope.jump = function(url) {
+            window.location = url;
+        }
+    });
 
 
     /**
@@ -246,7 +265,11 @@
         var result = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
         return result;
     };
+
+
+
+
 </script>
 
-
+</body>
 </html>

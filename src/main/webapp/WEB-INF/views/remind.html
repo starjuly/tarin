@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="../../public/css/style.css"/>
     <link rel="stylesheet" href="../../public/css/remind.css"/>
     <!-- 依赖库 手机调试的js引用顺序如下 -->
+    <script src="../../commons/angularJs/angular.min.js"></script>
     <script src="../../public/js/zepto.js"></script>
     <script src="../../public/js/cordova.js"></script>
     <script src="../../public/js/bingotouch.js"></script>
@@ -27,10 +28,11 @@
 </head>
 
 <body>
-<div class="bui-page">
+<div ng-app="myApp" ng-controller="httCtrl">
+    <div class="bui-page" ng-hide="myVar">
     <header class="bui-bar">
         <div class="bui-bar-left">
-            <a class="bui-btn" onclick="bui.back();"><i class="icon-back"></i></a>
+            <!--<a class="bui-btn" onclick="bui.back();"><i class="icon-back"></i></a>-->
         </div>
         <div class="bui-bar-main">提醒</div>
         <div class="bui-bar-right">
@@ -86,14 +88,31 @@
                 <button id="submit" type="button" class="btn btn-info  col-xs-9 ">保存</button>
             </div>
 
-
         </div>
 
 
     </main>
-    <footer></footer>
+    <footer id="foot">
+        <!-- 底部内容 -->
+        <ul class="bui-nav bui-fluid">
+            <!--管理员 四栏-->
+            <li class="bui-btn bui-box-vertical span3" ng-click="jump('course.html')" ng-hide="menu"><i class="icon-home" ></i>
+                <div class="span1">课程</div>
+            </li>
+            <li class="bui-btn bui-box-vertical span3" ng-click="jump('addCourse.html')" ng-hide="menu"><i class="fa fa-plus" ></i>
+                <div class="span1" >添加课程</div>
+            </li>
+            <!-- 在jump中添加需要跳转的路径-->
+            <li class="bui-btn bui-box-vertical span3" ng-click="jump('remind.html')" ng-hide="menu"><i class="fa fa-clock-o" ></i>
+                <div class="span1" >提醒</div>
+            </li>
+            <li class="bui-btn bui-box-vertical span3" ng-click="jump('adminInfo')" ng-hide="menu"><i class="fa fa-info-circle" ></i>
+                <div class="span1">个人信息</div>
+            </li>
+        </ul>
+    </footer>
 </div>
-</body>
+</div>
 
 <script type="text/javascript">
     //获取url中"?"符后的字串
@@ -109,9 +128,6 @@
     }
     var emailId = null;
     emailId = theRequest.emailId;
-    console.log(emailId);
-
-
 
 
     /**查询讲师*/
@@ -171,8 +187,6 @@
                     var date = getDate(time); //将毫秒转为日期格式
                     var subject = data.subject;
                     var content = data.content;
-                    console.log(lecturerId+"-"+time+"-"+subject+"-"+content);
-
                     $("#subject").val(subject).attr("disabled","disabled");
                     $("#content").html(content).attr("disabled","disabled");
                     var id = '#'+lecturerId;
@@ -191,6 +205,7 @@
         }
 
 
+        //保存
         $("#submit").click(function () {
             var userId = $("#lecturer").val();
             var content = $("#content").val();
@@ -200,7 +215,6 @@
             if(!bool){
                 bui.alert("提醒时间不能早于现在时间！")
             }
-            console.log(date.getTime());
             if(subject == null){
                 bui.alert("主题为空，请填写！");
                 return;
@@ -240,6 +254,17 @@
     });
 
 
+
+    //底部栏控制
+    var app = angular.module('myApp', []);
+    app.controller('httCtrl', function($scope,$http,$filter) {
+
+        $scope.jump = function(url) {
+            window.location = url;
+        }
+    });
+
+
     /**判断时间*/
     function judge(time,currentTime){
         //  /-/g 是正则表达式 表示将所有短横线-替换为斜杠/ 其中g表示全局替换
@@ -274,7 +299,9 @@
         var result = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
         return result;
     };
-</script>
 
+
+</script>
+</body>
 
 </html>

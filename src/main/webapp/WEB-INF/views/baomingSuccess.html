@@ -32,7 +32,12 @@
                 }
             })
 
-        })
+        });
+
+
+        function back() {
+            window.location = "/course.html";
+        }
 	</script>
 </head>
 <body>
@@ -40,7 +45,8 @@
 	<header class="bui-bar">
 		<div class="bui-bar-left">
 			<!-- 左边按钮 -->
-			<a class="bui-btn" onclick="bui.back();"><i class="icon-back"></i></a>
+			<!--<a class="bui-btn" onclick="bui.back();"><i class="icon-back"></i></a>-->
+			<a class="bui-btn" onclick="back();"><i class="icon-back"></i></a>
 		</div>
 		<div class="bui-bar-main"><!--用户名--></div>
 		<div class="bui-bar-right">

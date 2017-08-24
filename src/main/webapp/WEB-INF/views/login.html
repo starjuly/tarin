@@ -109,16 +109,17 @@
                     password : password
                 },
                 success : function(data){
-
                     var isSuccess = data.success;
                     var msg = data.msg;
                     if(isSuccess){
                         //自动消失提醒框支持HTML定义bui.hint({content:"<i class='icon-check'></i><br />登录成功", position:"center" , effect:"fadeInDown"});
                         window.location.href = "/course.html";
+                    }else{
+                        bui.alert("用户名或密码错误，请重试！");
                     }
                 },
                 error : function(status){
-                    console.log();
+                    bui.alert("用户名或密码错误，请重试！");
                 }
             });
         });

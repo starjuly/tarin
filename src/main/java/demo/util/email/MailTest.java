@@ -34,6 +34,7 @@ public class MailTest {
         ss.createMail();
         ss.setSubject(subject);
         ss.addContent(content);
+        ss.addHtml("<h3>如有其他协助，可以邮件回复。</h3>");
         ss.sendMail(tos);
 
     }

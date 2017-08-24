@@ -1,5 +1,6 @@
 package demo.service;
 
+import demo.model.EntryBlank;
 import demo.model.SignIn;
 import demo.model.TrainingCourse;
 import demo.model.User;
@@ -7,6 +8,7 @@ import demo.service.impl.courseServiceImpl;
 import demo.util.jsonUitl;
 import leap.orm.query.CriteriaQuery;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +20,7 @@ import java.util.Map;
 public class CourseService implements courseServiceImpl {
     public Boolean createCourse(String courseJson) {
         Map<String, Object> courseMap=jsonUitl.jsonToMap(courseJson);
+        if (courseMap.get("courseName")==null) return false;
         try{
             TrainingCourse.create(courseMap);
             return true;
@@ -58,17 +61,18 @@ public class CourseService implements courseServiceImpl {
         return ma;
     }
 
+    //课程报名
     public Boolean courseEnroll(String courseName, Integer userId) {
         CriteriaQuery<TrainingCourse> cq = TrainingCourse.query();
         cq.where("courseName like ?" ,
                 "%"+courseName);
 //        Integer uid=Integer.valueOf(userId);
         Integer courseId=cq.first().getCourseId();
-        SignIn courseSign=new SignIn();
-        courseSign.setUserId(userId);
-        courseSign.setCourseId(courseId);
+        EntryBlank eb=new EntryBlank();
+        eb.setUserId(userId);
+        eb.setCourseId(courseId);
         try {
-            courseSign.create();
+            eb.create();
             return true;
         }catch (Exception e){
             e.printStackTrace();
@@ -76,40 +80,32 @@ public class CourseService implements courseServiceImpl {
         }
     }
 
-    public List<Map<String,String>> queryAllCourse() {
+    //查询所有课程
+    public List<Map<String,String>> queryAllCourse(Integer userId) {
+        CriteriaQuery<EntryBlank> cq = EntryBlank.query();
+        cq.where("userId like ? ",
+                "%"+userId);
+        List<EntryBlank> leb=cq.list();
         List<Map<String,String>> lm=new ArrayList<Map<String, String>>();
         List<TrainingCourse> ls=TrainingCourse.findAll();
+        //查询所有课程并从中找到已经报名项
         for (TrainingCourse tr:ls
-             ) {
+                ) {
             Map<String,String> ma=new HashMap<String, String>();
             User te=queryTeacherById(tr.getLecturerId());
             ma.put("teacherName",te.getUserName());
             ma.put("courseName",tr.getCourseName());
-            ma.put("trainingTime",tr.getTrainingTime().toString());
-            //后来添加
-            ma.put("courseId",String.valueOf(tr.getCourseId()));
-            lm.add(ma);
-        }
-        return lm;
-    }
-
-    public List<Map<String, String>> querySignCourse(Integer userId) {
-        CriteriaQuery<SignIn> cq = SignIn.query();
-        cq.where("userId like ? ",
-                "%"+userId);
-        List<SignIn> si=cq.list();
-        //找到了课程ID想获得下面数据
-        List<Map<String,String>> lm=new ArrayList<Map<String, String>>();
-        List<TrainingCourse> ls=TrainingCourse.findAll();
-        //查询所有报名课程
-        for (SignIn ssi:si
-             ) {
-            Map<String,String> ma=new HashMap<String, String>();
-            TrainingCourse tc=TrainingCourse.find(ssi.getCourseId());
-            User te=queryTeacherById(tc.getLecturerId());
-            ma.put("teacherName",te.getUserName());
-            ma.put("courseName",tc.getCourseName());
-            ma.put("trainingTime",tc.getTrainingTime().toString());
+            ma.put("trainingTime",tr.getTrainingTime().toString().substring(0,16));
+            ma.put("courseId",tr.getCourseId().toString());
+            //判断是否已经报名课程
+            String eb="报名";
+            for(EntryBlank eeb:leb){
+                if (eeb.getCourseId().equals(tr.getCourseId())){
+                    eb="取消报名";
+                    break;
+                }
+            }
+            ma.put("signed",eb);
             lm.add(ma);
         }
         return lm;
@@ -117,11 +113,30 @@ public class CourseService implements courseServiceImpl {
 
 
 
-    public void courseUnSign(String courseName,Integer userId) {
+
+
+    // 取消签到
+    public void courseUnEntityBlank(String courseName,Integer userId) {
         CriteriaQuery<TrainingCourse> cq = TrainingCourse.query();
         cq.where("courseName like ?" ,
                 "%"+courseName);
         Integer courseId=cq.first().getCourseId();
-        SignIn.deleteAll("courseId=? and userId=?",courseId,userId);
+        EntryBlank.deleteAll("courseId=? and userId=?",courseId,userId);
+    }
+
+
+    //更新方法
+    public Boolean updateCourse(String courseJson) {
+        Map<String, Object> courseMap=jsonUitl.jsonToMap(courseJson);
+        String teacherName=courseMap.get("lecturerId").toString();
+        Integer userId=queryTeacher(teacherName).getUserId();
+        courseMap.put("lecturerId",userId);
+        try {
+            TrainingCourse.update(courseMap.get("courseId").toString(),courseMap);
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return false;
     }
 }
