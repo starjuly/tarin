@@ -57,6 +57,7 @@ public class CourseService implements courseServiceImpl {
         ma.put("trainingTime",tr.getTrainingTime().toString());
         ma.put("trainingLast",tr.getTrainLast());
         //用于页面获取跳转的重要参数
+        ma.put("trainingPlace",tr.getTrainingPlace());
         ma.put("courseId",String.valueOf(tr.getCourseId()));
         return ma;
     }

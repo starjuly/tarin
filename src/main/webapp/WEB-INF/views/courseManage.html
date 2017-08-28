@@ -27,7 +27,8 @@
         <header class="bui-bar">
             <div class="bui-bar-left">
                 <!-- 左边按钮 -->
-                <a class="bui-btn" onclick="bui.back();"><i class="icon-back"></i></a>
+                <!--<a class="bui-btn" onclick="bui.back();"><i class="icon-back"></i></a>-->
+                <a class="bui-btn" onclick="back();"><i class="icon-back"></i></a>
             </div>
             <div class="bui-bar-main">课程详情</div>
             <div class="bui-bar-right">
@@ -93,6 +94,13 @@
                     <div class="span1"><input id="trainingLast" type="text" ng-model="trainingLast" class="bui-input">
                     </div>
                 </div>
+
+                <div class="bui-btn bui-box">
+                    <div class="bui-label">上课地点</div>
+                    <div class="span1">
+                        <input id="trainingPlace" type="text" ng-model="trainingPlace" class="bui-input" >
+                    </div>
+                </div>
                 </form>
             </div>
             <div id="role">
@@ -116,6 +124,7 @@
             $scope.courseIntroduce = response.data.courseIntroduce;
             $scope.trainingTime =response.data.trainingTime;
             $scope.trainingLast = response.data.trainingLast;
+            $scope.trainingPlace= response.data.trainingPlace;
         });
         $scope.onSign=function(){
             $http.get("/course/course_enroll", {
@@ -129,9 +138,9 @@
 
         $scope.onMan=function () {
             if ($scope.courseName==null){
-                alert("请输入课程名称");
+                bui.alert("请输入课程名称");
             }else if ($scope.trainingTime==null){
-                alert("请输入课程日期");
+                bui.alert("请输入课程日期");
             }else {
                 $http.get("course/update_course",{
                     params:{
@@ -139,10 +148,11 @@
                             "courseId":$scope.courseId,
                             "courseName":$scope.courseName,
                             "lecturerId":$scope.teacherName,
+                            "departmentName":$scope.departmentName,
                             "trainingTime":$scope.trainingTime,
-                            "trainLast":$scope.trainLast,
+                            "trainLast":$scope.trainingLast,
                             "trainingPlace":$scope.trainingPlace,
-                            "courseIntroduction":$scope.courseIntroduction
+                            "courseIntroduction":$scope.courseIntroduce
                         }
                     }
                 }).then(function (response) {
@@ -162,6 +172,11 @@
         }
 
     });
+
+
+    function back() {
+        window.location = "/course.html";
+    }
 </script>
 </body>
 

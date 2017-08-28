@@ -97,6 +97,13 @@
                     </div>
                 </div>
 
+                <div class="bui-btn bui-box">
+                    <div class="bui-label">上课地点</div>
+                    <div class="span1">
+                        <input id="trainingPlace" type="text" ng-model="trainingPlace" class="bui-input" >
+                    </div>
+                </div>
+
             </div>
         </main>
         <footer>
@@ -169,6 +176,7 @@
             $scope.courseIntroduce = response.data.courseIntroduce;
             $scope.trainingTime = response.data.trainingTime;
             $scope.trainingLast = response.data.trainingLast;
+            $scope.trainingPlace= response.data.trainingPlace;
             //设置id
             courseId = response.data.courseId;
             $("#courseId").val(courseId);

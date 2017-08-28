@@ -31,24 +31,13 @@
                     alert(status)
                 }
             })
-			/* bui.ajax({
-			 url: "sign_in_model/save",
-			 data: {
-			 courseId : 1
-			 },//接口请求的参数
 
-			 // 可选参数
-			 method: "POST",
-			 timeout: 20000
-			 }).done(function(result){
-			 console.log(result);
-			 /!*  $("#time").html(result);*!/
-			 }).fail(function(result,status){
-			 //console.log(status)//"timeout"
-			 bui.alert("签到出错了");
-			 });*/
+        });
 
-        })
+
+        function back() {
+            window.location = "/course.html";
+        }
 	</script>
 </head>
 <body>
@@ -56,7 +45,8 @@
 	<header class="bui-bar">
 		<div class="bui-bar-left">
 			<!-- 左边按钮 -->
-			<a class="bui-btn" onclick="bui.back();"><i class="icon-back"></i></a>
+			<!--<a class="bui-btn" onclick="bui.back();"><i class="icon-back"></i></a>-->
+			<a class="bui-btn" onclick="back();"><i class="icon-back"></i></a>
 		</div>
 		<div class="bui-bar-main"><!--用户名--></div>
 		<div class="bui-bar-right">
@@ -81,10 +71,10 @@
 	<footer>
 		<!-- 底部内容 -->
 		<!-- 显示签到时间 -->
-		<div class="bui-box-center time-box">
+		<!--<div class="bui-box-center time-box">
 			<i class="fa fa-clock-o fa-3x"></i>
-			<div id="time" class="font-style"><!--12:30:00--></div>
-		</div>
+			<div id="time" class="font-style">&lt;!&ndash;12:30:00&ndash;&gt;</div>
+		</div>-->
 	</footer>
 </div>
 </body>

@@ -164,11 +164,8 @@
                     }
                    
                 }
-              console.log("1");
               var submit = "<br/><div class='bui-btn primary' id='submit'>提交</div>";
                $("#main").append(submit);
-                // $("#save").show();
-                console.log("2");
             },
             error : function (data) {
                window.location.href = "/index.html";
@@ -178,7 +175,15 @@
         });
 
 
+        //提交反馈内容
         bui.btn("#submit").submit(function(loading){
+            //如果是已提交了就不执行
+            var submitText = $("#submit").text();
+            if(submitText.indexOf("已反馈") !=-1){
+                loading.stop(); //停止加载
+                return;
+            }
+
             var one = $("input[name='one']:checked").val();
             var two = $("input[name='two']:checked").val();
             var three = $("#three").val();
@@ -194,30 +199,39 @@
             var thirteen = $("input[name='thirteen']:checked").val();
 
             if (one == null) {
+                loading.stop(); //停止加载
               bui.alert("第1题选择题为空，请选择");
               return;
             }else if(two == null){
+                loading.stop();
               bui.alert("第2题选择题为空，请选择");
               return;
             }else if(four == null){
+                loading.stop();
               bui.alert("第4题选择题为空，请选择");
               return;
             }else if(five == null){
+                loading.stop();
               bui.alert("第5题选择题为空，请选择");
               return;
             }else if(six == null){
+                loading.stop();
               bui.alert("第6题选择题为空，请选择");
               return;
             }else if(seven == null){
+                loading.stop();
               bui.alert("第7题选择题为空，请选择");
               return;
             }else if(nine == null){
+                loading.stop();
               bui.alert("第9题选择题为空，请选择");
               return;
             }else if(eleven == null){
+                loading.stop();
               bui.alert("第11题选择题为空，请选择");
               return;
             }else if(thirteen == null){
+                loading.stop();
               bui.alert("第13题选择题为空，请选择");
               return;
             }
@@ -256,8 +270,11 @@
                 method: "POST",
                 timeout: 20000
             }).done(function(result){
-                bui.alert("success");
-                loading.stop();
+                bui.alert("反馈成功");
+                loading.stop(); //停止加载
+                $("#submit").removeClass("primary");
+                $("#submit").addClass("disabled");
+                $("#submit").html("已反馈");
 
             }).fail(function(result,status){
                 bui.alert("fail");

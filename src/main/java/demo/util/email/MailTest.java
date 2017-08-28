@@ -33,8 +33,8 @@ public class MailTest {
         tos.add(emailAddress);
         ss.createMail();
         ss.setSubject(subject);
-        ss.addContent(content);
-        ss.addHtml("<h3>如有其他协助，可以邮件回复。</h3>");
+//        ss.addContent(content);
+        ss.addHtml(content+"<h4>如有其他协助，可以邮件回复。</h4>");
         ss.sendMail(tos);
 
     }

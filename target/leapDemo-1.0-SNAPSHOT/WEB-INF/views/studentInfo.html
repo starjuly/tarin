@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-    <title>个人信息</title> 
+    <title>个人信息</title>
     <meta name="format-detection" content="telephone=no" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <link rel="stylesheet" href="../../commons/font-awesome-4.7.0/css/font-awesome.css" />
@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="../../public/css/style.css" />
         <link rel="stylesheet" href="../../public/css/studentInfo.css" />
     <!-- 依赖库 手机调试的js引用顺序如下 -->
+    <script src="../../commons/angularJs/angular.min.js"></script>
     <script src="../../public/js/zepto.js"></script>
     <script src="../../public/js/cordova.js"></script>
     <script src="../../public/js/bingotouch.js"></script>
@@ -20,7 +21,7 @@
     <script src="../../public/js/bui.js"></script>
     <script src="../../public/js/app/_config.js"></script>
     <style type="text/css">
-       
+
     </style>
 
 
@@ -28,7 +29,8 @@
 </head>
 
 <body>
-<div class="bui-page">
+<div ng-app="myApp" ng-controller="httCtrl">
+<div class="bui-page" ng-hide="myVar">
     <header class="bui-bar">
         <div class="bui-bar-left">
         </div>
@@ -47,21 +49,21 @@
         </div>
         <div class="span6">
 
-          <div class="span12 "> 
+          <div class="span12">
             <i class="fa fa-user-circle fa-2x"></i>
             <span id="userName" class="user">
-
+              双笙
             </span>
            </div>
           <div id="departmentName" class="span12 dept" >
-
+              音乐部
             </div>
           </div>
 
         <div class="span3">
         </div>
       </div>
-       
+
 
       </div>
 
@@ -102,11 +104,29 @@
 
 
     </main>
-    <footer></footer>
+    <footer>
+        <!-- 底部内容 -->
+        <ul class="bui-nav bui-fluid" >
+            <!--学生 三栏-->
+            <li class="bui-btn bui-box-vertical span4" ng-click="jump('course.html')" ng-hide="menu"><i class="fa fa-book" ></i>
+                <div class="span1">课程</div>
+            </li>
+            <li class="bui-btn bui-box-vertical span4" ng-hide="menu">
+                <!--空占一栏-->
+            </li>
+            <li class="bui-btn bui-box-vertical span4" ng-click="jump('studentInfo')" ng-hide="menu"><i class="fa fa-info-circle" ></i>
+                <div class="span1">个人信息</div>
+            </li>
+
+        </ul>
+    </footer>
+
+</div>
 </div>
 </body>
 
 <script type="text/javascript">
+
 
     var userId;
     bui.ready(function (argument) {
@@ -118,7 +138,7 @@
            type : "GET",
             async : true,
             success :function (data) {
-                var userName = data.name;
+                var userName = data.userName;
                 var departmentName = data.departmentName;
 //                userId = data.userId;
                 $("#userName").html(userName);
@@ -150,7 +170,28 @@
     })
 
 
-    
+
+
+    //底部栏控制
+    var app = angular.module('myApp', []);
+    app.controller('httCtrl', function($scope,$http,$filter) {
+        //查询角色
+        $http.get("/course/query_role")
+            .then(function (response) {
+                $scope.role = response.data;
+                if ($scope.role == "0") {
+                    $scope.menu = true;
+
+                } else {
+                    $scope.menu = false;
+                }
+            });
+
+        $scope.jump = function(url) {
+            window.location = url;
+        }
+    });
+
 </script>
 
 

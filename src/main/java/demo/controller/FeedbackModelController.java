@@ -201,6 +201,21 @@ public class FeedbackModelController {
         return false;
     }
 
+    /**
+     * 根据课程id查询反馈人数
+     * @param courseId
+     * @return
+     */
+    public Map<String,String> count(String courseId){
+        CriteriaQuery<FeedbackObjectives> cq = FeedbackObjectives.<FeedbackObjectives>query();
+        cq.where("course_id = ? and num='1'",courseId);
+        List<FeedbackObjectives> list = cq.list();
+        Integer size = list.size();
+        Map<String,String> map = new HashMap<String, String>();
+        map.put("count",size.toString());
+        return map;
+    }
+
     public static void main(String[] args) {
         Object type = "0";
         if (type.equals("0")) {

@@ -1,5 +1,6 @@
 package demo.controller;
 
+import demo.model.FeedbackObjectives;
 import demo.model.SignIn;
 import demo.model.TrainingCourse;
 import demo.model.User;
@@ -7,13 +8,11 @@ import leap.orm.model.Model;
 import leap.orm.query.CriteriaQuery;
 import net.sf.json.JSONObject;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 /**
@@ -130,6 +129,22 @@ public class SignInModelController {
             return true;
         }
         return false;
+    }
+
+
+    /**
+     * 根据课程id查询反馈人数
+     * @param courseId
+     * @return
+     */
+    public Map<String,String> count(String courseId){
+        CriteriaQuery<SignIn> cq = SignIn.<SignIn>query();
+        cq.where("course_id = ?",courseId);
+        List<SignIn> list = cq.list();
+        Integer size = list.size();
+        Map<String,String> map = new HashMap<String, String>();
+        map.put("count",size.toString());
+        return map;
     }
 
     public static void main(String[] args) {
